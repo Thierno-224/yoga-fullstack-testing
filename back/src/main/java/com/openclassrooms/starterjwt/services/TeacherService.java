@@ -1,24 +1,39 @@
 package com.openclassrooms.starterjwt.services;
 
+import com.openclassrooms.starterjwt.dto.TeacherDto;
+import com.openclassrooms.starterjwt.mapper.TeacherMapper;
 import com.openclassrooms.starterjwt.models.Teacher;
 import com.openclassrooms.starterjwt.repository.TeacherRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.openclassrooms.starterjwt.exception.NotFoundException;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TeacherService {
+
     private final TeacherRepository teacherRepository;
+    private final TeacherMapper teacherMapper;
 
-    public TeacherService(TeacherRepository teacherRepository) {
-        this.teacherRepository = teacherRepository;
-    }
-
-    public List<Teacher> findAll() {
-        return this.teacherRepository.findAll();
-    }
-
+    // Retourne une entité JPA pour les besoins métier
     public Teacher findById(Long id) {
-        return this.teacherRepository.findById(id).orElse(null);
+        return teacherRepository.findById(id)
+                .orElseThrow(() ->
+                        new NotFoundException("Professeur introuvable")
+                );
+    }
+
+    // Retourne un DTO pour l'API
+    public TeacherDto findDtoById(Long id) {
+        return teacherMapper.toDto(findById(id));
+    }
+
+    // Retourne une liste de DTO
+    public List<TeacherDto> findAll() {
+        return teacherMapper.toDto(teacherRepository.findAll());
     }
 }
