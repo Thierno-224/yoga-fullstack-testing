@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:yoga_test;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  docker:
+    compose:
+      enabled: false
+
+oc:
+  app:
+    jwtExpirationMs: 86400000
+    jwtSecret: zhSDFMfyfhoK2SHlXI/37FHuDs3ST+5iKbxjuekPNIWIOfTKhWHVp0TKwJ7ULORNc21rvis7t7QK4IyvQiOzzA==

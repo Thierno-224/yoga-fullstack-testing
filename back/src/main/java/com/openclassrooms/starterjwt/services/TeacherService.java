@@ -19,7 +19,6 @@ public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final TeacherMapper teacherMapper;
 
-    // Retourne une entité JPA pour les besoins métier
     public Teacher findById(Long id) {
         return teacherRepository.findById(id)
                 .orElseThrow(() ->
@@ -27,12 +26,10 @@ public class TeacherService {
                 );
     }
 
-    // Retourne un DTO pour l'API
     public TeacherDto findDtoById(Long id) {
         return teacherMapper.toDto(findById(id));
     }
 
-    // Retourne une liste de DTO
     public List<TeacherDto> findAll() {
         return teacherMapper.toDto(teacherRepository.findAll());
     }
