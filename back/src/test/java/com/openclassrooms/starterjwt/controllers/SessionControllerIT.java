@@ -18,12 +18,12 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,6 +48,9 @@ class SessionControllerIT {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TransactionTemplate transactionTemplate;
 
     private Teacher teacher;
 
@@ -95,6 +98,18 @@ class SessionControllerIT {
                         .password("encoded-password")
                         .admin(false)
                         .build()
+        );
+    }
+
+    private boolean isParticipant(Long sessionId, Long userId) {
+        return Boolean.TRUE.equals(
+                transactionTemplate.execute(status ->
+                        sessionRepository.findById(sessionId)
+                                .orElseThrow()
+                                .getUsers()
+                                .stream()
+                                .anyMatch(user -> user.getId().equals(userId))
+                )
         );
     }
 
@@ -158,5 +173,35 @@ class SessionControllerIT {
                 .andExpect(status().isOk());
 
         assertFalse(sessionRepository.existsById(session.getId()));
+    }
+
+    @Test
+    void shouldParticipateInSession() throws Exception {
+        Session session = createSession();
+        User user = createUser();
+
+        mockMvc.perform(post("/api/session/{id}/participate/{userId}",
+                        session.getId(), user.getId()))
+                .andExpect(status().isOk());
+
+        assertTrue(isParticipant(session.getId(), user.getId()));
+    }
+
+    @Test
+    void shouldNoLongerParticipateInSession() throws Exception {
+        Session session = createSession();
+        User user = createUser();
+
+        mockMvc.perform(post("/api/session/{id}/participate/{userId}",
+                        session.getId(), user.getId()))
+                .andExpect(status().isOk());
+
+        assertTrue(isParticipant(session.getId(), user.getId()));
+
+        mockMvc.perform(delete("/api/session/{id}/participate/{userId}",
+                        session.getId(), user.getId()))
+                .andExpect(status().isNoContent());
+
+        assertFalse(isParticipant(session.getId(), user.getId()));
     }
 }

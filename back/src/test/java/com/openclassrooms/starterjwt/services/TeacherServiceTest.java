@@ -54,8 +54,9 @@ public class TeacherServiceTest {
     @Test
     public void shouldReturnTeacher() {
         when(teacherRepository.findById(1L)).thenReturn(Optional.of(teacher));
+        when(teacherMapper.toDto(teacher)).thenReturn(teacherDto);
 
-        Teacher result = teacherService.findById(1L);
+        TeacherDto result = teacherService.findById(1L);
 
         assertNotNull(result);
         assertEquals("Jean", result.getFirstName());
@@ -90,7 +91,7 @@ public class TeacherServiceTest {
         when(teacherMapper.toDto(teacher))
                 .thenReturn(teacherDto);
 
-        TeacherDto result = teacherService.findDtoById(1L);
+        TeacherDto result = teacherService.findById(1L);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());

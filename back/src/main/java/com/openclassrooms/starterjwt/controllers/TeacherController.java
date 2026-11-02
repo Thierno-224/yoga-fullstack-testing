@@ -22,6 +22,6 @@ public class TeacherController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TeacherDto> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(teacherService.findDtoById(id));
+        return ResponseEntity.ok(teacherService.findById(id));
     }
 }

@@ -19,17 +19,18 @@ public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final TeacherMapper teacherMapper;
 
-    public Teacher findById(Long id) {
+    public TeacherDto findById(Long id) {
         return teacherRepository.findById(id)
+                .map(teacherMapper::toDto)
                 .orElseThrow(() ->
                         new NotFoundException("Professeur introuvable")
                 );
     }
 
-    public TeacherDto findDtoById(Long id) {
-        return teacherMapper.toDto(findById(id));
-    }
-
+   // public TeacherDto findDtoById(Long id) {
+      //  return teacherMapper.toDto(findById(id));
+   // }
+//test inutile
     public List<TeacherDto> findAll() {
         return teacherMapper.toDto(teacherRepository.findAll());
     }

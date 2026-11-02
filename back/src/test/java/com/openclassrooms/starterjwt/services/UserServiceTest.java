@@ -48,7 +48,6 @@ public class UserServiceTest {
                 "Dupont",
                 "Jean",
                 false,
-                "passwordHash123",
                 null,
                 null
         );
@@ -58,7 +57,8 @@ public class UserServiceTest {
     void shouldReturnUser() {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
-        User result = userService.findById(1L);
+        when(userMapper.toDto(user)).thenReturn(userDto);
+        UserDto result = userService.findById(1L);
 
         assertNotNull(result);
         assertEquals("Dupont", result.getLastName());
@@ -86,7 +86,7 @@ public class UserServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(userMapper.toDto(user)).thenReturn(userDto);
 
-        UserDto result = userService.findDtoById(1L);
+        UserDto result = userService.findById(1L);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -103,6 +103,4 @@ public class UserServiceTest {
 
         verify(userRepository, never()).delete(user);
     }
-
-
 }

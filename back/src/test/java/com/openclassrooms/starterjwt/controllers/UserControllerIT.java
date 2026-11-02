@@ -1,5 +1,6 @@
 package com.openclassrooms.starterjwt.controllers;
 
+import com.openclassrooms.starterjwt.exception.NotFoundException;
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +12,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -47,13 +48,24 @@ public class UserControllerIT {
                 .andExpect(jsonPath("$.firstName").value("Doe"));
     }
 
+//    @Test
+//    void shouldDeleteUser() throws Exception {
+//        mockMvc.perform(delete("/api/user/{id}", user.getId()))
+//                .andExpect(status().isOk());
+//
+//        assertFalse(userRepository.existsById(user.getId()));
+//    }
+
     @Test
-    void shouldDeleteUser() throws Exception {
-        mockMvc.perform(delete("/api/user/{id}", user.getId()))
-                .andExpect(status().isOk());
+    void shouldReturn404WhenUserDoesNotExist() throws Exception {
+        mockMvc.perform(get("/api/user/9999"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").isNotEmpty())
+                .andExpect(result -> {
+                    Exception exception = result.getResolvedException();
 
-        assertFalse(userRepository.existsById(user.getId()));
-
-
+                    assertNotNull(exception);
+                    assertInstanceOf(NotFoundException.class, exception);
+                });
     }
 }

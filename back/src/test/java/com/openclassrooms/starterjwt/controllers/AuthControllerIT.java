@@ -1,6 +1,7 @@
 package com.openclassrooms.starterjwt.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openclassrooms.starterjwt.exception.BadRequestException;
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.payload.request.LoginRequest;
 import com.openclassrooms.starterjwt.payload.request.SignupRequest;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -74,4 +76,45 @@ public class AuthControllerIT {
                 .andExpect(jsonPath("$.token").exists());
 
     }
+
+    @Test
+    void shouldReturn400WhenRegisteringWithExistingEmail()
+            throws Exception {
+
+        User existingUser = new User(
+                null,
+                "jean.dupont@example.com",
+                "Dupont",
+                "Jean",
+                passwordEncoder.encode("password123"),
+                false,
+                null,
+                null
+        );
+
+        userRepository.save(existingUser);
+
+        String requestBody = """
+            {
+                "email": "jean.dupont@example.com",
+                "firstName": "Jean",
+                "lastName": "Dupont",
+                "password": "password123"
+            }
+            """;
+
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message")
+                        .value("Error: Email is already taken!"))
+                .andExpect(result ->
+                        assertInstanceOf(
+                                BadRequestException.class,
+                                result.getResolvedException()
+                        )
+                );
+    }
+
 }

@@ -19,21 +19,18 @@ public class UserService {
     private final UserMapper userMapper;
 
     @Transactional(readOnly = true)
-    public User findById(Long id) {
+    public UserDto findById(Long id) {
         return userRepository.findById(id)
+                .map(userMapper::toDto)
                 .orElseThrow(() ->
                         new NotFoundException("Utilisateur introuvable")
                 );
     }
 
-    @Transactional(readOnly = true)
-    public UserDto findDtoById(Long id) {
-        return userMapper.toDto(findById(id));
-    }
-
     @Transactional
     public void delete(Long id, String authenticatedEmail) {
-        User user = findById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException("Aucun utilisatuer trouvé"));
 
         if (!user.getEmail().equals(authenticatedEmail)) {
             throw new ResponseStatusException(

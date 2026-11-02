@@ -32,11 +32,8 @@ public class UserDto {
     @NonNull
     private boolean admin;
 
-    @JsonIgnore
-    @Size(max = 120)
-    private String password;
-
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
 }

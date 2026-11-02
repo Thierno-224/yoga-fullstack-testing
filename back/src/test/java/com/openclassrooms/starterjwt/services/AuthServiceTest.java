@@ -185,4 +185,5 @@ class AuthServiceTest {
 
         verify(jwtUtils, never()).generateJwtToken(any());
     }
+
 }

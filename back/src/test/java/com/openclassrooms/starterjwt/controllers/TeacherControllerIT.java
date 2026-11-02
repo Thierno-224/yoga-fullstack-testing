@@ -1,6 +1,7 @@
 package com.openclassrooms.starterjwt.controllers;
 
 import com.openclassrooms.starterjwt.models.Teacher;
+import com.openclassrooms.starterjwt.repository.SessionRepository;
 import com.openclassrooms.starterjwt.repository.TeacherRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,11 +26,14 @@ public class TeacherControllerIT {
     private MockMvc mockMvc;
     @Autowired
     private TeacherRepository teacherRepository;
+    @Autowired
+    private SessionRepository sessionRepository;
 
     private Teacher teacher;
 
     @BeforeEach
     void setUp() {
+        sessionRepository.deleteAll();
         teacherRepository.deleteAll();
 
         teacher = new Teacher();

@@ -1,11 +1,16 @@
+
 package com.openclassrooms.starterjwt.mapper;
 
 import com.openclassrooms.starterjwt.dto.UserDto;
 import com.openclassrooms.starterjwt.models.User;
 import org.mapstruct.Mapper;
-import org.springframework.stereotype.Component;
 
-@Component
+import java.util.List;
+
 @Mapper(componentModel = "spring")
-public interface UserMapper extends EntityMapper<UserDto, User> {
+public interface UserMapper {
+
+    UserDto toDto(User user);
+
+    List<UserDto> toDto(List<User> users);
 }
