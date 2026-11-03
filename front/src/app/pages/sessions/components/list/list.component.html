@@ -1,4 +1,3 @@
-
 <div class="list">
   <mat-card>
     <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
@@ -6,7 +5,7 @@
       @if (user!.admin) {
         <button mat-raised-button color="primary" routerLink="create">
           <mat-icon>add</mat-icon>
-          <span class="ml1">Create</span>
+          <span class="ml1" data-cy="btn-create">Create</span>
         </button>
       }
     </mat-card-header>
@@ -30,13 +29,13 @@
           <mat-card-actions>
             <button mat-raised-button color="primary" [routerLink]="['detail',session.id]">
               <mat-icon>search</mat-icon>
-              <span class="ml1">Detail</span>
+              <span class="ml1" data-cy="btn-detail">Detail</span>
             </button>
             @if (user!.admin) {
               <button mat-raised-button color="primary"
                       [routerLink]="['update',session.id]">
                 <mat-icon>edit</mat-icon>
-                <span class="ml1">Edit</span>
+                <span class="ml1" data-cy="btn-edit">Edit</span>
               </button>
             }
           </mat-card-actions>

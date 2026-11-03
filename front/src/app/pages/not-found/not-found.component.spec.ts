@@ -1,7 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { expect } from '@jest/globals';
-
-import { NotFoundComponent } from './not-found.component';
+import {expect} from '@jest/globals';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {NotFoundComponent} from './not-found.component';
 
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;
@@ -9,9 +8,8 @@ describe('NotFoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NotFoundComponent ]
-    })
-    .compileComponents();
+      imports: [NotFoundComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NotFoundComponent);
     component = fixture.componentInstance;
@@ -20,5 +18,12 @@ describe('NotFoundComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should display the not found message', () => {
+    const element: HTMLElement = fixture.nativeElement;
+    const title = element.querySelector('h1');
+
+    expect(title?.textContent?.trim()).toBe('Page not found !');
   });
 });
