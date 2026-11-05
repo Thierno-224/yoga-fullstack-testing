@@ -1,22 +1,29 @@
-
 import 'jest-preset-angular/setup-jest';
+import { jest } from '@jest/globals';
 
 const createStorageMock = (): Storage => {
   let storage: Record<string, string> = {};
 
   return {
-    get length() {
+    get length(): number {
       return Object.keys(storage).length;
     },
-    key: (index: number) => Object.keys(storage)[index] ?? null,
-    getItem: (key: string) => storage[key] ?? null,
-    setItem: (key: string, value: string) => {
+
+    key: (index: number): string | null =>
+      Object.keys(storage)[index] ?? null,
+
+    getItem: (key: string): string | null =>
+      storage[key] ?? null,
+
+    setItem: (key: string, value: string): void => {
       storage[key] = String(value);
     },
-    removeItem: (key: string) => {
+
+    removeItem: (key: string): void => {
       delete storage[key];
     },
-    clear: () => {
+
+    clear: (): void => {
       storage = {};
     }
   };
@@ -32,10 +39,19 @@ Object.defineProperty(window, 'sessionStorage', {
   value: createStorageMock()
 });
 
-Object.defineProperty(document.body.style, 'transform', {
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
   configurable: true,
-  value: () => ({
-    enumerable: true,
-    configurable: true
+  value: (query: string): MediaQueryList => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(() => false)
   })
+
 });

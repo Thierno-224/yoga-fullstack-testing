@@ -102,6 +102,7 @@ describe('Sessions spec', () => {
       .should('eq', 200);
 
     cy.url().should('include', '/sessions');
+  });
 
     it('should update a session', () => {
       cy.login('yoga@studio.com', 'test!1234');
@@ -124,5 +125,4 @@ describe('Sessions spec', () => {
 
       cy.url().should('include', '/sessions');
     });
-  })
 });

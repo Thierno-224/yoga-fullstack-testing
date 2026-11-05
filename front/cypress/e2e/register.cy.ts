@@ -1,8 +1,8 @@
 describe('register spec', ()=> {
-  /*
+
   it('should register', () => {
 
-    const email = `tes${crypto.randomUUID()}@gmail.com`
+    const email = `test${crypto.randomUUID()}@gmail.com`
     cy.intercept('POST', '/api/auth/register').as('registerRequest');
     cy.visit('http://localhost:4200/register');
     cy.get('input[formControlName="firstName"]').type('FirstNameTest');
@@ -16,7 +16,6 @@ describe('register spec', ()=> {
 
     cy.url().should('include', '/login');
   });
-  */
 
 
   it('should reject registration when email is empty', () => {
