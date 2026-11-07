@@ -27,7 +27,7 @@ describe('Sessions spec', () => {
   });
 
   it('should hide admin buttons for regular user ', () => {
-    cy.login('toto5@gmail.com', 'test!1234');
+    cy.login('user@yoga.test', 'test!1234');
 
     cy.url().should('include', '/sessions');
 

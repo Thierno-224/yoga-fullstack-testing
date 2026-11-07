@@ -52,11 +52,13 @@ public class SessionService {
          sessionRepository.delete(session);
     }
 
+    @Transactional(readOnly = true)
     public List<SessionDto> findAll() {
         List<Session> listSession = this.sessionRepository.findAll();
         return sessionMapper.toDto(listSession);
     }
 
+    @Transactional(readOnly = true)
     public SessionDto getById(Long id) {
         Session session =  this.sessionRepository.findById(id)
                 .orElseThrow(()-> new NotFoundException("Aucune session trouvée"));

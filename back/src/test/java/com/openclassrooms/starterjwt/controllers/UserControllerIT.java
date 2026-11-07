@@ -48,13 +48,13 @@ public class UserControllerIT {
                 .andExpect(jsonPath("$.firstName").value("Doe"));
     }
 
-//    @Test
-//    void shouldDeleteUser() throws Exception {
-//        mockMvc.perform(delete("/api/user/{id}", user.getId()))
-//                .andExpect(status().isOk());
-//
-//        assertFalse(userRepository.existsById(user.getId()));
-//    }
+    @Test
+    void shouldDeleteUser() throws Exception {
+        mockMvc.perform(delete("/api/user/{id}", user.getId()))
+                .andExpect(status().isOk());
+
+        assertFalse(userRepository.existsById(user.getId()));
+    }
 
     @Test
     void shouldReturn404WhenUserDoesNotExist() throws Exception {

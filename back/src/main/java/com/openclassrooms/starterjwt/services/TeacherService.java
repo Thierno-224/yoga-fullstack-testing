@@ -27,10 +27,6 @@ public class TeacherService {
                 );
     }
 
-   // public TeacherDto findDtoById(Long id) {
-      //  return teacherMapper.toDto(findById(id));
-   // }
-//test inutile
     public List<TeacherDto> findAll() {
         return teacherMapper.toDto(teacherRepository.findAll());
     }

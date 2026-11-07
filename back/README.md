@@ -1,135 +1,271 @@
+
 # Yoga App !
 
 Backend de l'application Yoga App !.
 
-
 ## Configuration du back
 
-    - name: back
-    - port: 8080
+- name: back
+- port: 8080
+- Spring Boot : 3.5.5
+- Java : 21
 
-## Pré-requis pour le bon fonctionnement du back :
+## Pré-requis pour le bon fonctionnement du back
 
-    -> JDK 21
-    -> Docker
-    -> Docker Compose
-    -> Maven 3.9.3 (https://archive.apache.org/dist/maven/maven-3/3.9.3/binaries/) ou plus
+- JDK 21
+- Docker
+- Docker Compose
+- Maven 3.9.3 ([Télécharger Maven](https://archive.apache.org/dist/maven/maven-3/3.9.3/binaries/)) ou plus
 
 ## Démarrage du back
-Pour démarrer le back, il :
-- démarrer Docker-Desktop sur votre poste de travail local.
-- lancer une console, se placer à la racine du projet et exécuter la commande Maven :
-```
+
+Pour démarrer le backend :
+
+1. Démarrer Docker Desktop sur votre poste de travail local.
+2. Ouvrir un terminal et se placer dans le dossier `back`.
+3. Exécuter la commande Maven :
+
+```bash
 mvn spring-boot:run
 ```
+
 Cette commande va :
-- initialiser le container Docker qui contient la base de données
-- lancer l'application back et le connecter à la base de données précédemment créée
 
-Les traces logs devraient ressemblées à ceci :
-```
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
+- Initialiser le conteneur Docker contenant la base de données MySQL.
+- Démarrer l'application backend.
+- Connecter l'application à la base de données.
 
- :: Spring Boot ::                (v3.5.5)
+Les logs devraient notamment afficher :
 
-[back] [           main] c.o.s.SpringBootSecurityJwtApplication   : Starting SpringBootSecurityJwtApplication using Java 21.0.3 with PID 15152
-[back] [           main] c.o.s.SpringBootSecurityJwtApplication   : No active profile set, falling back to 1 default profile: "default"
-[back] [           main] .s.b.d.c.l.DockerComposeLifecycleManager : Using Docker Compose file E:\dev\workspaces\missionOC\projet-p4\back\compose.yaml
-[back] [utReader-stderr] o.s.boot.docker.compose.core.DockerCli   :  Container back_mysql  Created
-[back] [utReader-stderr] o.s.boot.docker.compose.core.DockerCli   :  Container back_mysql  Starting
-[back] [utReader-stderr] o.s.boot.docker.compose.core.DockerCli   :  Container back_mysql  Started
-[back] [utReader-stderr] o.s.boot.docker.compose.core.DockerCli   :  Container back_mysql  Waiting
-[back] [utReader-stderr] o.s.boot.docker.compose.core.DockerCli   :  Container back_mysql  Healthy
-[back] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-[back] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 3 JPA repository interfaces.
-[back] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-[back] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-[back] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.44]
-[back] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-[back] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1360 ms
-[back] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-[back] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
-[back] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-[back] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-[back] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-[back] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@16cb6f51
-[back] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-[back] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 9.1
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-[back] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-[back] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-[back] [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-[back] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
-[back] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-[back] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-[back] [           main] c.o.s.SpringBootSecurityJwtApplication   : Started SpringBootSecurityJwtApplication in 10.354 seconds (process running for 11.197)
+```text
+:: Spring Boot :: (v3.5.5)
+
+Starting SpringBootSecurityJwtApplication using Java 21
+No active profile set, falling back to 1 default profile: "default"
+
+Container back_mysql Started
+Container back_mysql Healthy
+
+HikariPool-1 - Start completed.
+
+Tomcat started on port 8080 (http) with context path '/'
+
+Started SpringBootSecurityJwtApplication
 ```
 
-Sur Docker-Desktop, vous devriez voir apparaître un container MySQL qui correspond au projet.
+Le backend est accessible sur :
+
+http://localhost:8080
+
+Sur Docker Desktop, vous devriez voir apparaître un conteneur MySQL correspondant au projet.
 
 ![1-docker-desktop](pictures/1-docker-desktop.png)
 
-Vous pouvez vous connecter à la base de données et vérifier que la table ```USERS``` a été créée.
-Pour cela, cliquez sur le lien `back_mysql` ce qui vous amènera sur la vue complète de la base de données.
-Dans l'onglet ```Exec```, il faut :
+### Vérification de la base de données
 
-1. se connecter à la base de données. Tapez la commande ci-dessous
+Vous pouvez vous connecter à la base de données et vérifier que la table `users` a été créée.
 
-    ```
-    mysql -u user_test -p
-    ```
-   L'invite de commande demandera le mot de passe. Il est : ```test_password```.
+Dans Docker Desktop, sélectionner le conteneur `back_mysql`, puis ouvrir l'onglet `Exec`.
+
+1. Se connecter à MySQL :
+
+```bash
+mysql -u user_test -p
+```
+
+Le mot de passe est :
+
+```text
+test_password
+```
+
+2. Sélectionner la base de données :
+
+```sql
+USE test;
+```
+
+3. Copier le contenu du fichier `src/main/resources/sql/insert_user.sql` et l'exécuter 
 
 
-2. Se connecter au schéma de base de données `test`. Dans l'invite de commande, tapez la commande ci-dessous :
+4. Vérifier le contenu de la table :
 
-    ```
-    use test;
-    ```
+```sql
+SELECT * FROM users;
+```
 
-3. Copier le contenu du fichier `ressources/sql/insert_user.sql` et l'exécuter dans l'invite de commande :
+Le résultat devrait afficher les informations de l'utilisateur inséré.
 
-    ```
-    INSERT INTO users(first_name, last_name, admin, email, password) VALUES ('Admin', 'Admin', true, 'yoga@studio.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq');
-    ```
-   
-3. Vérifier le contenu de la table `users`.
+Ce script crée l'administrateur par défaut :
 
-    ```
-    select * from users;
-    ```
-   Le résultat devrait afficher les données de l'utilisateur inséré précédemment.
-   
-   Ce script crée l'utilisateur admin par défaut :
-
-   - login: yoga@studio.com
-   - password: test!1234
+- Login : `yoga@studio.com`
+- Password : `test!1234`
 
 La capture d'écran ci-dessous résume les étapes précédentes :
 
 ![2-docker-desktop-bdd](pictures/2-docker-desktop-bdd.png)
 
+## Configuration des environnements de test
+
+Le backend utilise plusieurs profils Spring Boot pour séparer l'environnement de développement des environnements de test.
+
+| Profil | Base de données | Utilisation |
+|---|---|---|
+| `default` | MySQL | Développement |
+| `test` | H2 | Tests d'intégration backend |
+| `e2e` | H2 | Tests end-to-end Cypress |
+
+Les fichiers de configuration sont situés dans :
+
+```text
+src/main/resources/
+├── application.yml
+├── application-test.yml
+├── application-e2e.yml
+└── sql/
+    ├── insert_user.sql
+    └── data-e2e.sql
+```
+
+Le profil `e2e` utilise la variable d'environnement `E2E_JWT_SECRET` pour la signature des tokens JWT.
+
+Cette variable doit être définie avant de démarrer le backend avec ce profil.
+
+## Tests backend
+
+Le projet utilise JUnit 5, Mockito, Spring Boot Test et Spring Security Test pour tester les différentes couches de l'application.
+
+### Tests unitaires
+
+Mockito est utilisé pour simuler les dépendances, notamment les repositories et les services.
+
+Depuis le dossier `back`, exécuter :
+
+```bash
+mvn test
+```
+
+Cette commande lance les tests détectés par Maven Surefire.
+
+### Tests d'intégration
+
+Les tests d'intégration permettent de vérifier les interactions entre les composants Spring Boot et la base de données.
+
+Ils utilisent notamment :
+
+- Spring Boot Test
+- Spring Security Test
+- Spring Data JPA
+- H2
+- Testcontainers, lorsqu'un test nécessite un conteneur de base de données
+
+Les tests utilisant H2 peuvent activer le profil `test` :
+
+```java
+@ActiveProfiles("test")
+@SpringBootTest
+```
+
+Le profil `test` charge la configuration définie dans `application-test.yml`.
+
+Pour exécuter les tests :
+
+```bash
+mvn test
+```
+
+
+## Couverture des tests backend
+
+La couverture du code Java est mesurée avec JaCoCo 0.8.13, configuré dans le fichier `pom.xml`.
+
+### Génération du rapport de couverture
+
+Depuis le dossier `back`, exécuter :
+
+```bash
+mvn clean verify
+```
+
+### Consultation du rapport
+
+Le rapport HTML est disponible à l'emplacement suivant :
+
+```text
+target/site/jacoco/index.html
+```
+
+Sur macOS, ouvrir le rapport avec :
+
+```bash
+open target/site/jacoco/index.html
+```
+
+Le package `dto` est exclu du rapport JaCoCo selon la configuration du `pom.xml`.
+
+## Tests E2E avec Cypress
+
+Les tests end-to-end permettent de vérifier le fonctionnement de l'application complète, depuis l'interface Angular jusqu'à l'API Spring Boot.
+
+Ils utilisent une base de données H2 dédiée, indépendante de MySQL.
+
+### Démarrage du backend en mode E2E
+
+Le profil `e2e` utilise :
+
+- Une base H2 en mémoire.
+- Une initialisation automatique du schéma.
+- Des données de test prédéfinies.
+- Une configuration JWT dédiée.
+- Docker Compose désactivé.
+
+Le fichier `src/main/resources/sql/data-e2e.sql` contient les données nécessaires aux scénarios Cypress.
+
+Pour démarrer le backend avec le profil `e2e`, exécuter :
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=e2e
+```
+
+La variable `E2E_JWT_SECRET` doit être disponible dans l'environnement du processus Maven.
+
+Il est également possible de démarrer le backend depuis IntelliJ IDEA avec la configuration `SpringBootSecurityJwtApplicationE2E`.
+
+### Comptes de test E2E
+
+| Rôle | Email | Mot de passe |
+|---|---|---|
+| Administrateur | `yoga@studio.com` | `test!1234` |
+| Utilisateur standard | `user@yoga.test` | `test!1234` |
+
+La base H2 est recréée au démarrage du backend avec le profil `e2e`.
+
+### Exécution des tests Cypress
+
+Le backend doit être démarré avec le profil `e2e` sur le port `8080`.
+
+Depuis le dossier `front`, démarrer Angular :
+
+```bash
+npm run start
+```
+
+Dans un second terminal, toujours depuis `front`, ouvrir Cypress :
+
+```bash
+npx cypress open
+```
 
 ## Ressources
 
-
 ### Collection Postman
 
-Importez la collection Postman
+Importer la collection Postman disponible dans :
 
-> postman/yoga.postman_collection.json
+```text
+postman/yoga.postman_collection.json
+```
 
-La documentation de Postman se trouve ici :
+La documentation Postman se trouve ici :
 
 https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-data-into-postman

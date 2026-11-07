@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:yoga_e2e;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    show-sql: false
+    open-in-view: false
+
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:sql/data-e2e.sql
+
+  docker:
+    compose:
+      enabled: false
+
+oc:
+  app:
+    jwtExpirationMs: 86400000
+    jwtSecret: ${E2E_JWT_SECRET}

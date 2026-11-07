@@ -51,6 +51,8 @@ public class AuthControllerIT {
         )
                 .andExpect(status().isOk());
 
+
+
         assertTrue(userRepository.existsByEmail("jean1@doe.com"));
     }
 
